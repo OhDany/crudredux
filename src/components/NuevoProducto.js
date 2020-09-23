@@ -8,6 +8,9 @@ import {
   Divider,
   Segment,
   Input,
+  Dimmer,
+  Loader,
+  Message,
 } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -21,6 +24,12 @@ const NuevoProducto = () => {
 
   // Utilizar useDispatch y te crea una función
   const dispatch = useDispatch();
+
+  // Acceder al state del store
+  const cargando = useSelector((state) => state.productos.loading);
+  const error = useSelector((state) => state.productos.error);
+
+  console.log(cargando);
 
   // Manda llamr el action de productoAction
   const agregarProducto = (producto) =>
@@ -84,10 +93,21 @@ const NuevoProducto = () => {
                   onChange={(e) => guardarPrecio(e.target.value)}
                 />
               </Form.Field>
+              {error ? (
+                <Message negative>
+                  <Message.Header>Error</Message.Header>
+                  <p>Falla en la conexión de la base de datos</p>
+                </Message>
+              ) : null}
               <Button primary fluid type="submit">
                 Agregar
               </Button>
             </Form>
+            {cargando ? (
+              <Dimmer active inverted>
+                <Loader>Cargando...</Loader>
+              </Dimmer>
+            ) : null}
           </Segment>
         </Grid.Column>
       </Grid.Row>
