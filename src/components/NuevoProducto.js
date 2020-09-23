@@ -11,16 +11,20 @@ import {
 
 const NuevoProducto = () => {
   return (
-    <div>
-      <Grid textAlign="center">
-        <Grid.Column width={6}>
+    <Grid
+      verticalAlign="middle"
+      columns={3}
+      centered
+      // style={{ height: '100vh' }}
+    >
+      <Grid.Row>
+        <Grid.Column>
           <Segment raised>
             <Header as="h2" icon textAlign="center">
               <Icon color="blue" name="paw" circular />
               <Header.Content>Nuevo producto</Header.Content>
             </Header>
             <Divider />
-
             <Form>
               <Form.Field>
                 <label>Nombre del producto</label>
@@ -36,8 +40,8 @@ const NuevoProducto = () => {
             </Form>
           </Segment>
         </Grid.Column>
-      </Grid>
-    </div>
+      </Grid.Row>
+    </Grid>
   );
 };
 
