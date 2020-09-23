@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Grid,
   Header,
@@ -7,6 +7,7 @@ import {
   Icon,
   Divider,
   Segment,
+  Input,
 } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -14,22 +15,33 @@ import { useDispatch, useSelector } from 'react-redux';
 import { crearNuevoProductoAction } from '../actions/productoActions';
 
 const NuevoProducto = () => {
+  // State del componente
+  const [nombre, guardarNombre] = useState('');
+  const [precio, guardarPrecio] = useState(0);
+
   // Utilizar useDispatch y te crea una función
   const dispatch = useDispatch();
 
   // Manda llamr el action de productoAction
-  const agregarProducto = () => dispatch(crearNuevoProductoAction());
+  const agregarProducto = (producto) =>
+    dispatch(crearNuevoProductoAction(producto));
 
   // Cuando el usuario haga submit
   const submitNuevoProducto = (e) => {
     e.preventDefault();
 
     // Validar formulario
+    if (nombre.trim() === '' || precio <= 0) {
+      return;
+    }
 
     // Si no hay errores
 
     // Crear el nuevo producto
-    agregarProducto();
+    agregarProducto({
+      nombre,
+      precio,
+    });
   };
 
   return (
@@ -50,11 +62,27 @@ const NuevoProducto = () => {
             <Form onSubmit={submitNuevoProducto}>
               <Form.Field>
                 <label>Nombre del producto</label>
-                <input placeholder="Nombre del producto" />
+                <Input
+                  icon="tags"
+                  iconPosition="left"
+                  placeholder="Nombre del producto"
+                  type="text"
+                  name="nombre"
+                  value={nombre}
+                  onChange={(e) => guardarNombre(e.target.value)}
+                />
               </Form.Field>
               <Form.Field>
                 <label>Precio del producto</label>
-                <input placeholder="Precio del producto" />
+                <Input
+                  icon="dollar sign"
+                  iconPosition="left"
+                  placeholder="Precio del producto"
+                  type="number"
+                  name="precio"
+                  value={precio}
+                  onChange={(e) => guardarPrecio(e.target.value)}
+                />
               </Form.Field>
               <Button primary fluid type="submit">
                 Agregar
