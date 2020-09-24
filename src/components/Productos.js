@@ -1,7 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Header, Icon, Table, Label } from 'semantic-ui-react';
 
+// Redux
+import { useSelector, useDispatch } from 'react-redux';
+import { obtenerProductosAction } from '../actions/productoActions';
+
 const Productos = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    // Consultar la API
+    const cargarProductos = () => dispatch(obtenerProductosAction());
+    cargarProductos();
+  });
+
   return (
     <div>
       <Header as="h2" icon textAlign="center">
