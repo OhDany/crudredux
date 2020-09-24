@@ -63,7 +63,7 @@ export function obtenerProductosAction() {
     dispatch(descargarProductos());
 
     try {
-      const respuesta = await clienteAxios.get('/producto');
+      const respuesta = await clienteAxios.get('/productos');
       dispatch(descargaProductosExito(respuesta.data));
     } catch (error) {
       console.log(error);

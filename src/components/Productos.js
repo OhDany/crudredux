@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Header, Icon, Table, Label } from 'semantic-ui-react';
-
+import Producto from './Producto';
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
 import { obtenerProductosAction } from '../actions/productoActions';
@@ -12,7 +12,11 @@ const Productos = () => {
     // Consultar la API
     const cargarProductos = () => dispatch(obtenerProductosAction());
     cargarProductos();
-  });
+  }, []);
+
+  // Obtener el state
+  const productos = useSelector((state) => state.productos.productos);
+  console.log(productos);
 
   return (
     <div>
@@ -30,13 +34,11 @@ const Productos = () => {
         </Table.Header>
 
         <Table.Body>
-          <Table.Row>
-            <Table.Cell>
-              <Label ribbon>First</Label>
-            </Table.Cell>
-            <Table.Cell>Second</Table.Cell>
-            <Table.Cell>Third</Table.Cell>
-          </Table.Row>
+          {productos.length === 0
+            ? 'No hay productos'
+            : productos.map((producto) => (
+                <Producto key={producto.id} producto={producto} />
+              ))}
         </Table.Body>
       </Table>
     </div>
