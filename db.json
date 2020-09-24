@@ -6,11 +6,6 @@
       "precio": "31111"
     },
     {
-      "id": 2,
-      "nombre": "Jugo de Naranja",
-      "precio": "1"
-    },
-    {
       "nombre": "Jugo de Naranja",
       "precio": "300",
       "id": 3
@@ -34,11 +29,6 @@
       "nombre": "Jugo de Piña",
       "precio": "100",
       "id": 7
-    },
-    {
-      "nombre": "Jugo de Naranja",
-      "precio": "80",
-      "id": 8
     }
   ]
 }
