@@ -1,5 +1,12 @@
 import React, { useEffect } from 'react';
-import { Header, Icon, Table, Label } from 'semantic-ui-react';
+import {
+  Header,
+  Icon,
+  Table,
+  Message,
+  Dimmer,
+  Loader,
+} from 'semantic-ui-react';
 import Producto from './Producto';
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
@@ -16,13 +23,25 @@ const Productos = () => {
 
   // Obtener el state
   const productos = useSelector((state) => state.productos.productos);
-  console.log(productos);
+  const error = useSelector((state) => state.productos.error);
+  const cargando = useSelector((state) => state.productos.loading);
 
   return (
     <div>
       <Header as="h2" icon textAlign="center">
         <Icon color="blue" name="paw" circular />
         <Header.Content>Producto</Header.Content>
+        {error ? (
+          <Message negative>
+            <Message.Header>Error</Message.Header>
+            <p>Falla en la conexión de la base de datos</p>
+          </Message>
+        ) : null}
+        {cargando ? (
+          <Dimmer active inverted>
+            <Loader>Cargando...</Loader>
+          </Dimmer>
+        ) : null}
       </Header>
       <Table celled>
         <Table.Header>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Table, Button } from 'semantic-ui-react';
+import { Table, Button, Icon } from 'semantic-ui-react';
 
 const Producto = ({ producto }) => {
   const { nombre, precio, id } = producto;
@@ -9,11 +9,11 @@ const Producto = ({ producto }) => {
       <Table.Cell>{nombre}</Table.Cell>
       <Table.Cell>$ {precio}</Table.Cell>
       <Table.Cell>
-        <Button size="mini" as={Link} to={`/productos/editar/${id}`} primary>
-          Editar
+        <Button as={Link} to={`/productos/editar/${id}`} primary>
+          <Icon name="edit" /> Editar
         </Button>
-        <Button size="mini" color="red">
-          Eliminar
+        <Button color="youtube">
+          <Icon name="trash" /> Eliminar
         </Button>
       </Table.Cell>
     </Table.Row>
