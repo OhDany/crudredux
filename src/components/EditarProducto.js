@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { editarProductoAction } from '../actions/productoActions';
+import { useHistory } from 'react-router-dom';
 
 import {
   Grid,
@@ -12,10 +14,40 @@ import {
 } from 'semantic-ui-react';
 
 const EditarProducto = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  // Nuevo state de editar producto
+  const [producto, guardarProducto] = useState({
+    nombre: '',
+    precio: '',
+  });
+
   // Producto a editar
-  const producto = useSelector((state) => state.productos.editarproducto);
-  if (!producto) return null;
-  const { nombre, precio, id } = producto;
+  const productoeditar = useSelector((state) => state.productos.editarproducto);
+
+  // Llenar el state automaticamente
+  useEffect(() => {
+    guardarProducto(productoeditar);
+  }, [productoeditar]);
+
+  // Leer los datos del formulario
+  const onChangeFormulario = (e) => {
+    guardarProducto({
+      ...producto,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const { nombre, precio } = producto;
+
+  const submitEditarProducto = (e) => {
+    e.preventDefault();
+
+    dispatch(editarProductoAction(producto));
+
+    history.push('/');
+  };
 
   return (
     <Grid
@@ -32,7 +64,7 @@ const EditarProducto = () => {
               <Header.Content>Editar producto</Header.Content>
             </Header>
             <Divider />
-            <Form>
+            <Form onSubmit={submitEditarProducto}>
               <Form.Field>
                 <label>Nombre del producto</label>
                 <input
@@ -40,6 +72,7 @@ const EditarProducto = () => {
                   name="nombre"
                   placeholder="Nombre del producto"
                   value={nombre}
+                  onChange={onChangeFormulario}
                 />
               </Form.Field>
               <Form.Field>
@@ -49,6 +82,7 @@ const EditarProducto = () => {
                   placeholder="Precio del producto"
                   name="precio"
                   value={precio}
+                  onChange={onChangeFormulario}
                 />
               </Form.Field>
               <Button primary fluid type="submit">

@@ -9,6 +9,7 @@ import {
   ELIMINAR_PRODUCTO_EXITO,
   ELIMINAR_PRODUCTO_ERROR,
   EDITAR_PRODUCTO,
+  COMENZAR_EDITAR_PRODUCTO,
   EDITAR_PRODUCTO_EXITO,
   EDITAR_PRODUCTO_ERROR,
 } from '../types';
@@ -143,4 +144,33 @@ export function editarProducto(producto) {
 const obtenerProductoAction = (producto) => ({
   type: EDITAR_PRODUCTO,
   payload: producto,
+});
+
+// Edita un registro en la API y state
+export function editarProductoAction(producto) {
+  return async (dispatch) => {
+    dispatch(comenzarEditarProducto());
+
+    try {
+      await clienteAxios.put(`/productos/${producto.id}`, producto);
+      dispatch(editarProductoExito(producto));
+    } catch (error) {
+      console.log(error);
+      dispatch(editarProductoError());
+    }
+  };
+}
+
+const comenzarEditarProducto = () => ({
+  type: COMENZAR_EDITAR_PRODUCTO,
+});
+
+const editarProductoExito = (producto) => ({
+  type: EDITAR_PRODUCTO_EXITO,
+  payload: producto,
+});
+
+const editarProductoError = () => ({
+  type: EDITAR_PRODUCTO_ERROR,
+  payload: true,
 });
