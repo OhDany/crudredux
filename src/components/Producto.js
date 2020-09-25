@@ -1,16 +1,20 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Table, Button, Icon } from 'semantic-ui-react';
 import Swal from 'sweetalert2';
 
 // Redux
 import { useDispatch } from 'react-redux';
-import { eliminarProductoAction } from '../actions/productoActions';
+import {
+  eliminarProductoAction,
+  editarProducto,
+} from '../actions/productoActions';
 
 const Producto = ({ producto }) => {
   const { nombre, precio, id } = producto;
 
   const dispatch = useDispatch();
+  const history = useHistory(); // Habilitar history para redirección
 
   // Confirma si desea eliminarla
   const confirmarEliminarProducto = (id) => {
@@ -32,12 +36,22 @@ const Producto = ({ producto }) => {
     });
   };
 
+  // Función que redirecciona de forma programada
+  const redireccionaEdicion = (producto) => {
+    dispatch(editarProducto(producto));
+    history.push(`/productos/editar/${producto.id}`);
+  };
+
   return (
     <Table.Row>
       <Table.Cell>{nombre}</Table.Cell>
       <Table.Cell>$ {precio}</Table.Cell>
       <Table.Cell>
-        <Button as={Link} to={`/productos/editar/${id}`} primary>
+        <Button
+          type="button"
+          primary
+          onClick={() => redireccionaEdicion(producto)}
+        >
           <Icon name="edit" /> Editar
         </Button>
         <Button color="youtube" onClick={() => confirmarEliminarProducto(id)}>

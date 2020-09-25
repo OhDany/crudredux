@@ -8,6 +8,7 @@ import {
   ELIMINAR_PRODUCTO,
   ELIMINAR_PRODUCTO_EXITO,
   ELIMINAR_PRODUCTO_ERROR,
+  EDITAR_PRODUCTO,
 } from '../types';
 
 // Cada reducer tiene su propio state
@@ -16,6 +17,7 @@ const initialState = {
   error: null,
   loading: false,
   eliminarproducto: null,
+  editarproducto: null,
 };
 
 export default function (state = initialState, action) {
@@ -59,6 +61,11 @@ export default function (state = initialState, action) {
           (producto) => producto.id !== state.eliminarproducto
         ),
         eliminarproducto: null,
+      };
+    case EDITAR_PRODUCTO:
+      return {
+        ...state,
+        editarproducto: action.payload,
       };
 
     default:
