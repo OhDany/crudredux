@@ -1,4 +1,5 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   Grid,
@@ -11,6 +12,11 @@ import {
 } from 'semantic-ui-react';
 
 const EditarProducto = () => {
+  // Producto a editar
+  const producto = useSelector((state) => state.productos.editarproducto);
+  if (!producto) return null;
+  const { nombre, precio, id } = producto;
+
   return (
     <Grid
       verticalAlign="middle"
@@ -29,11 +35,21 @@ const EditarProducto = () => {
             <Form>
               <Form.Field>
                 <label>Nombre del producto</label>
-                <input placeholder="Nombre del producto" />
+                <input
+                  type="text"
+                  name="nombre"
+                  placeholder="Nombre del producto"
+                  value={nombre}
+                />
               </Form.Field>
               <Form.Field>
                 <label>Precio del producto</label>
-                <input placeholder="Precio del producto" />
+                <input
+                  type="number"
+                  placeholder="Precio del producto"
+                  name="precio"
+                  value={precio}
+                />
               </Form.Field>
               <Button primary fluid type="submit">
                 Guardar cambios
