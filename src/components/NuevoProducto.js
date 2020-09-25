@@ -76,8 +76,13 @@ const NuevoProducto = ({ history }) => {
             <Header as="h2" icon textAlign="center">
               <Icon color="blue" name="paw" circular />
               <Header.Content>Nuevo producto</Header.Content>
-              {alerta ? <p className={alerta.classes}> {alerta.msg} </p> : null}
             </Header>
+            {alerta ? (
+              <Message negative>
+                <Message.Header>Error</Message.Header>
+                <p>{alerta.msg}</p>
+              </Message>
+            ) : null}
             <Divider />
             <Form onSubmit={submitNuevoProducto}>
               <Form.Field>
